@@ -8,6 +8,8 @@ function kk_add_images_enqueue_scripts() {
 	}
 	wp_enqueue_script('kk_add_images_script', plugins_url( '/kk-add-images-js/script.js', __FILE__ ), array('jquery'), null, true);
 	wp_enqueue_style('kk_add_images_css', plugins_url( '/kk-add-images-css/style.css', __FILE__ ));
+	wp_enqueue_script('kk_add_images_fancybox_script', plugins_url( '/dist/jquery.fancybox.min.js', __FILE__ ), array('jquery'), null, true);
+	wp_enqueue_style('kk_add_images_fancybox_css', plugins_url( '/dist/jquery.fancybox.min.css', __FILE__ ));
 	wp_localize_script( 'kk_add_images_script', 'kk_add_images', ['url' => admin_url( 'admin-ajax.php' ), 'images' => get_option( 'images_to_add' )] );
 }
 
@@ -109,3 +111,47 @@ function rename_resized_files($name)
 	$new_name = str_replace($ext, $added, $name);
 	return $new_name;
 }
+
+
+		//Показываем изображения в тексте комментария
+function kk_add_images_show_images_in_comment( $comment ){
+	$time = get_comment_date('Y/m');
+	$upload_dir = wp_upload_dir($time);
+	if( $commentimages = get_comment_meta( get_comment_ID(), 'kk_added_image', false ) ) {
+			$comment_add = '<div class="kk_add_images_container">';
+			foreach ($commentimages as $image ) {
+				$comment_add .= '<div class="kk_add_images_wrapper"><a href="'.$upload_dir["url"].'/'.$image.'" data-fancybox><img src="'.$upload_dir["url"].'/'.rename_resized_files($image).'"></a></div>';
+			}
+			$comment_add .= '</div>';
+			$comment .= $comment_add;
+  } 
+
+	return $comment;
+}
+
+
+		//При удалении комментария из базы чистим папку
+function kk_add_images_clean_deleted( $id ){
+	$time = get_comment_date('Y/m');
+	$upload_dir = wp_upload_dir($time);
+	if( $commentimages = get_comment_meta( $id, 'kk_added_image', false ) ) {
+			
+			foreach ($commentimages as $image ) {
+
+				$small_file = $upload_dir["path"].'/'.rename_resized_files($image);
+				$long_file = $upload_dir["path"].'/'.$image;
+
+
+				if (file_exists($small_file)) {
+					unlink($small_file);
+				}
+				if (file_exists($long_file)) {
+					unlink($long_file);
+				}
+
+			}
+
+	}
+
+}
+

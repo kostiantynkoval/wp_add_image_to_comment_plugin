@@ -23,3 +23,10 @@ add_action('admin_menu', 'kk_add_images_register_option');
 		//Загружаем изображения в БД
 add_action( 'comment_post', 'kk_add_images_upload_images');
 //wp_die('Я срабатываю тут');
+
+		//Показываем изображения в тексте комментария
+add_filter( 'comment_text', 'kk_add_images_show_images_in_comment', 10, 3 );
+
+
+		//При удалении комментария из базы чистим папку
+add_action( 'delete_comment', 'kk_add_images_clean_deleted' );

@@ -48,7 +48,7 @@ function kk_add_image_quantity_option_page()
 	echo '<input type="submit" name="save" value="Сохранить" />';
 }
 
-
+		//Загружаем изображения в папку uploads и добавляем мета-поле в БД, а так же создаем копию изображения размером 300х300
 function kk_add_images_upload_images($id)
 {
 	if ($_FILES['kk_add_images_files']['size'][0]==0) {return;}
@@ -61,7 +61,7 @@ function kk_add_images_upload_images($id)
 	$file_list = $_FILES['kk_add_images_files'];
 
 		
-				//Реорганизуем массив файлов
+				//Реорганизуем массив загруженных файлов
 		$file_ary = [];
     $file_count = count($file_list['name']);
     $file_keys = array_keys($file_list);
@@ -130,7 +130,7 @@ function kk_add_images_show_images_in_comment( $comment ){
 }
 
 
-		//При удалении комментария из базы чистим папку
+		//При удалении комментария из базы чистим папку uploads
 function kk_add_images_clean_deleted( $id ){
 	$time = get_comment_date('Y/m');
 	$upload_dir = wp_upload_dir($time);
@@ -152,6 +152,6 @@ function kk_add_images_clean_deleted( $id ){
 			}
 
 	}
-
 }
+
 

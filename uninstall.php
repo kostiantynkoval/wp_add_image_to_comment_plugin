@@ -20,9 +20,16 @@ if( ! defined('WP_UNINSTALL_PLUGIN') ) exit;
 
 
 						if (file_exists($small_file)) {
+							
+							echo "<pre>";
+							var_dump($small_file);
+							echo "</pre>";
 							unlink($small_file);
 						}
 						if (file_exists($long_file)) {
+							echo "<pre>";
+							var_dump($long_file);
+							echo "</pre>";
 							unlink($long_file);
 						}
 

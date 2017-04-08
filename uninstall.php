@@ -35,9 +35,5 @@ if( ! defined('WP_UNINSTALL_PLUGIN') ) exit;
 	}
 
 
-
+ delete_option('kk_add_image_quantity_option');
 	wp_dequeue_script( 'kk_add_images_script' );
-
-
-
-die();

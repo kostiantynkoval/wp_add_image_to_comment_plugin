@@ -14,13 +14,9 @@ if( ! defined('WP_UNINSTALL_PLUGIN') ) exit;
 			$time = get_comment_date('Y/m', $rel_comment->comment_id);
 			$upload_dir = wp_upload_dir($time);
 
-			echo "<pre>";
-			print_r($rel_comment);
-			echo "</pre>";
 
-
-						$small_file = $upload_dir["path"].'/'.rename_resized_files($rel_comment->meta_value);
-						$long_file = $upload_dir["path"].'/'.$rel_comment->meta_value;
+						$small_file = $upload_dir["url"].'/'.rename_resized_files($rel_comment->meta_value);
+						$long_file = $upload_dir["url"].'/'.$rel_comment->meta_value;
 
 
 						if (file_exists($small_file)) {

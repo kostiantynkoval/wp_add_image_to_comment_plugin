@@ -1,9 +1,10 @@
 <?php
 /*
 Plugin Name: Add Image to Comment
-Description: Дает возможность добавить одно или несколько изображений к комментарию, а так же просматривать их в полном размере, как слайд-шоу
+Plugin URI: https://github.com/kostiantynkoval/wp_add_image_to_comment_plugin
+Description: Gets opportunity to add images to user's comments
 Version: 1.0
-Author: Константин Коваль
+Author: Kostiantyn Koval
 */
 
 require_once __DIR__ . '/functions.php';
